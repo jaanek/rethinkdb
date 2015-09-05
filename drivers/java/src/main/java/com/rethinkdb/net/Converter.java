@@ -53,10 +53,9 @@ public class Converter {
                 return convertPseudo(mapobj, fmt);
             }
             return mapobj.entrySet().stream()
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey,
-                            entry -> convertPseudotypes(entry.getValue(), fmt)
-                    ));
+                .collect(HashMap::new,
+                         (m, v) -> m.put(v.getKey(), convertPseudotypes(v.getValue(), fmt)),
+                         HashMap::putAll);
         } else {
             return obj;
         }
